@@ -24,44 +24,61 @@ connection.connect((err) => {
   start();
 });
 
-// inquirer prompts to start user
-// start inquirer prompt asking user what they'd like to do with
-// functions
+// inquirer prompts to ask user what they'd like to do
 
-//inquirer prompt asking what user would like to do
-// choices into a switch statement, call each function based on selection from user
-//                "View All Employees?",
-//               "View All Employee's By Roles?",
-//               "View all Emplyees By Deparments",
-//               "Update Employee",
-//               "Add Employee?",
-//               "Add Role?",
-//               "Add Department?"
 
 const start = () => {
   inquirer
-    .prompt({
-      name: "userOption",
-      type: "list",
-      message: "What would you like to do ",
-      choices: ["View All Employees", "Add Employee"],
-    })
+  .prompt({
+    name: 'userOption',
+    type: 'list',
+    message: 'What would you like to do?',
+    choices: ["View All Employees?",
+    new inquirer.Separator(), 
+    "View all Employees By Department?",
+    new inquirer.Separator(), 
+    "View All Employees By Role?", 
+    new inquirer.Separator(), 
+    "Add Employee?",
+    new inquirer.Separator(), 
+    "Remove Employee?",
+    new inquirer.Separator(), 
+    "Update Employee Role?",
+    new inquirer.Separator(), 
+    "Add Department?",
+    new inquirer.Separator(),
+  ],
+  })
     .then((answer) => {
+      // choices then go into a switch statement, call each function based on selection from user
       switch (answer.userOption) {
         case "View All Employees":
           allEmployees();
           break;
-        case "Add Employee":
+        case "View All Employees By Department?":
+          employeesByDepartment();
+          break;
+          case "View All Employees By Role?":
+          employeesByRole();
+          break;
+          case "Add Employee?":
           addEmployees();
           break;
-        default:
+          case "Remove Employee?":
+          removeEmployees();
+          break;
+          case "Update Employee Role?":
+          updatedEmpRole();
+          break;
+          case "Add Department?":
+          addDepartment();
+          break;
+          default:
           console.log("Error");
           connection.end();
       }
     });
 };
-
-// within functions
 
 const allEmployees = () => {
   connection.query("SELECT * FROM employee", (err, res) => {
@@ -69,5 +86,30 @@ const allEmployees = () => {
 
     // Log all results of the SELECT statement
     console.table(res);
+    // call start function to bring up options
+    start();
   });
 };
+
+const employeesByDepartment = () => {
+  connection.query("SELECT * FROM employee", (err, res) => {
+    if (err) throw err;
+
+    // Log all results of the SELECT statement
+    console.table(res);
+    // call start function to bring up options
+    start();
+  });
+};
+
+const employeesByRole = () => {
+  connection.query("SELECT * FROM employee", (err, res) => {
+    if (err) throw err;
+
+    // Log all results of the SELECT statement
+    console.table(res);
+    
+  });
+};
+
+

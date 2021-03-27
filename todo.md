@@ -8,9 +8,21 @@
 
 
 // Add departments, roles, employees
+ - function for each selection 
+ * add employee (call function )
+    - inquirer prompt 
+        - first name, last name, what is the role, who is the manager
+        - for role and manager, call selectrole and select manager function 
+* add department (call function)
+    - inquirer prompt
+        - what department would you like to add 
+* 
 
 
 // View departments, roles, employees
+- create functions for each 
+- 
+
 
 
 // Update employee roles
