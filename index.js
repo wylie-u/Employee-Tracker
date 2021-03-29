@@ -20,7 +20,6 @@ const connection = mysql.createConnection({
 connection.connect((err) => {
   if (err) throw err;
   console.log(`connected as id ${connection.threadId}`);
-  //queryAllSongs();
   start();
 });
 
@@ -62,7 +61,7 @@ const start = () => {
           employeesByRole();
           break;
           case "Add Employee?":
-          addEmployees();
+          addEmployee();
           break;
           case "Remove Employee?":
           removeEmployees();
@@ -79,9 +78,9 @@ const start = () => {
       }
     });
 };
-
+// table first, then property within table (ie = employee(table).property
 const allEmployees = () => {
-  connection.query("SELECT * FROM employee", (err, res) => {
+  connection.query("SELECT employee.first_name, employee.last_name, role.title, department.name, employee.manager_id FROM employee INNER JOIN job_role ON employee.role_id = job_role.role_id", (err, res) => {
     if (err) throw err;
 
     // Log all results of the SELECT statement
@@ -92,7 +91,7 @@ const allEmployees = () => {
 };
 
 const employeesByDepartment = () => {
-  connection.query("SELECT * FROM employee", (err, res) => {
+  connection.query("SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employee.id;", (err, res) => {
     if (err) throw err;
 
     // Log all results of the SELECT statement
@@ -103,7 +102,8 @@ const employeesByDepartment = () => {
 };
 
 const employeesByRole = () => {
-  connection.query("SELECT * FROM employee", (err, res) => {
+  // role.title will be just Title
+  connection.query("SELECT employee.first_name, employee.last_name,role.title AS Title FROM employee JOIN role ON employee.role_id = role.id;",  (err, res) => {
     if (err) throw err;
 
     // Log all results of the SELECT statement
@@ -111,5 +111,81 @@ const employeesByRole = () => {
     
   });
 };
+
+
+// add employee
+function addEmployee () {
+  inquirer
+  .prompt([
+        {
+          name: "firstname",
+          type: "input",
+          message: "Enter the employee's first name"
+        },
+        {
+          name: "lastname",
+          type: "input",
+          message: "Enter the employee's last name"
+        },
+        {
+          name: "role",
+          type: "list",
+          message: "What is their role? ",
+          //calls selectRole function
+          choices: selectRole()
+        },
+        {
+            name: "manager",
+            type: "rawlist",
+            message: "What is their managers name?",
+            // calls selectManager function
+            choices: selectManager()
+        }
+  ])
+  .then((answers) => {
+      connection.query("INSERT INTO employee SET ?", 
+      {
+          first_name: answers.firstName,
+          last_name: answers.lastName,
+          manager_id: managerId,
+          role_id: roleId
+          
+      }, function(err){
+          if (err) throw err
+          console.table(answers)
+          start()
+      })
+
+  })
+
+}
+
+function addDepartment () {
+
+  inquirer
+  .prompt([
+        {
+          name: "department",
+          type: "input",
+          message: "What is the department you wish to add?"
+        }
+      ])
+        .then((answers) => {
+          connection.query("INSERT INTO department SET ?", 
+          {
+              
+            name: answers.department    
+              
+          }, function(err){
+              if (err) throw err
+              console.table(answers)
+              start()
+          })
+    
+      })
+
+
+}
+
 
 

@@ -19,7 +19,7 @@ CREATE TABLE department (
 CREATE TABLE role (
 
     -- column or a set of columns that uniquely identifies each row in the table.
-   id INT auto_increment PRIMARY KEY,
+    id INT auto_increment PRIMARY KEY,
     -- department title 
     title  VARCHAR(30),
     salary DECIMAL,
