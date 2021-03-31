@@ -2,14 +2,14 @@
 
 # Description
 
-This project creates a Node application for a business owner to be able to view and manage departments, roles, and employees in their company in order to organize and plan their business. 
+This project creates a Node application for a business owner so that they are able to view and manage departments, roles, and employees in their company in order to organize and plan their business. 
 
 This project uses the MYSQL NPM package to connect to your MySQL database and perform queries, and InquirerJs NPM package to interact with the user via the command-line. 
 
 
 ## Table of Contents
 
- * [Video-Walk-Through](#Walk-Through)
+ * [Video-Walk-Through](https://www.awesomescreenshot.com/video/3237792?key=5903fc00dad25c7303c4ce951189c4db)
  * [Building Tools](#Building-Tools) 
  * [Installation](#Installation) 
  * [Credits](#Credits)

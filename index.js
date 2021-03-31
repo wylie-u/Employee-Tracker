@@ -115,38 +115,6 @@ const employeesByRole = () => {
   });
 };
 
-// function to store roles to use for adding employee function
-// empty array will hold the role choice that will be passed in from the user response
-var roleChoice = [];
-function selectRole() {
-  connection.query("SELECT * FROM role", function(err, res) {
-    if (err) throw err
-    for (var i = 0; i < res.length; i++) {
-      // response from the user will be pushed into the empty array 
-      roleChoice.push(res[i].title);
-    }
-
-  })
-  return roleChoice;
-}
-
-// function to store manager choice after query is called 
-// empty array will hold choice after the prompt is ran
-var managerChoice = [];
-function selectManager() {
-  connection.query("SELECT first_name, last_name FROM employee WHERE manager_id IS NULL", function(err, res) {
-    if (err) throw err
-    for (var i = 0; i < res.length; i++) {
-      // response from the user will be pushed into the empty array 
-      managerChoice.push(res[i].first_name);
-    }
-
-  })
-  return managerChoice;
-}
-
-
-
 // add employee
 function addEmployee () {
   inquirer
@@ -162,34 +130,33 @@ function addEmployee () {
           message: "Enter the employee's last name"
         },
         {
-          name: "role",
-          type: "list",
-          message: "What is their role?",
-          //calls selectRole function using the role's query 
-          choices: selectRole()
+
+          name: "roleId",
+          type: "input",
+          message: "What is the employee's role id?",
+          
         },
         {
-            name: "manager",
-            type: "rawlist",
-            message: "What is their managers name?",
-            // calls selectManager function
-            choices: selectManager()
+
+            name: "managerId",
+            type: "input",
+            message: "What is the manager id number?",
+          
         }
   ])
   .then((answers) => {
-      var roleId = selectRole().indexOf(answers.role) + 1
-      var managerId = selectManager().indexOf(answers.manager) + 1
+      
     // answers from the prompt will be set as values of the properties from the table
       connection.query("INSERT INTO employee SET ?", 
       {
           // first name in employee column
-          first_name: answers.firstName,
+          first_name: answers.firstname,
           // last name in employee column
-          last_name: answers.lastName,
+          last_name: answers.lastname,
           // manager id in employee column 
-          manager_id: managerId,
+          manager_id: answers.managerId,
           // role id in employee column
-          role_id: roleId
+          role_id: answers.roleId
 
            
       }, function(err){
@@ -296,8 +263,7 @@ function removeEmployees () {
 }
 
 function updatedEmpRole () {
-  connection.query("SELECT employee.last_name, role.title FROM employee JOIN role ON employee.role_id = role.id;", function(err, res) {
-    // console.log(res)
+  connection.query("SELECT * FROM employee", function(err, res) {
      if (err) throw err
      console.log(res)
      // need to reference last name of employee and update role 
@@ -305,21 +271,22 @@ function updatedEmpRole () {
     .prompt([
       {
         name: 'employee',
-        type: 'input',
-        choices: function() {
-          var lastName = [];
-          for (var i = 0; i < res.length; i++) {
-            lastName.push(res[i].last_name);
-          }
-          return lastName;
-        },
-        message: "What is the Employee's last name? ",
+        name: 'choice',
+          type: 'rawlist',
+          choices() {
+            const empSelection = [];
+            res.forEach(({ last_name }) => {
+              empSelection.push(last_name);
+            });
+            return empSelection;
+          },
+          message: 'Which employee would you like to update?',
       },
       {
 
         name: 'role',
         type: 'input',
-        message: "What is the Employees new title? ",
+        message: "What is the Employee's new role id?",
     
       
       },
@@ -327,7 +294,7 @@ function updatedEmpRole () {
     ]).then((answer) => {
       
       let chosenRole;
-      results.forEach((role_id) => {
+      res.forEach((role_id) => {
         if (role_id.last_name === answer.employee) {
           chosenRole = role_id;
         }
@@ -343,7 +310,7 @@ function updatedEmpRole () {
               role_id: answer.role,
             },
             {
-              id: chosenRole.id,
+              id: chosenRole,
             },
           ],
           (error) => {
@@ -352,11 +319,7 @@ function updatedEmpRole () {
             start();
           }
         );
-      } else {
-        // if error, fix
-        console.log('Problem! Please fix errors!');
-        start();
-      }
+      } 
     });
 })
 }
