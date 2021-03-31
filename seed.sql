@@ -6,7 +6,7 @@ VALUES ("Sales Director", 3.10, 1),("IT Director", 3.10, 2), ("Coder", 2000000, 
 
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("James", "Bond", 2, NULL), ("Michael", "Jordan", 3, 1 ), ("Michelle", "Wee", 1, NULL), ("Jennifer", "Gardner", 4, NULL)
+VALUES ("James", "Bond", 2, NULL), ("Michael", "Jordan", 3, 1 ), ("Michelle", "Wee", 1, NULL), ("Jennifer", "Gardner", 4, NULL), ("Andre", "Bowman", 5, NULL), ("Kelly", "Clark", 6, NULL), ("Samantha", "Martinez", 7, NULL)
 
 SELECT * FROM department;
 SELECT * FROM role;

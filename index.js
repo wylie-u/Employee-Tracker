@@ -34,7 +34,7 @@ const start = () => {
     message: 'What would you like to do?',
     choices: ["View All Employees?",
     new inquirer.Separator(), 
-    "View all Employees By Department?",
+    "View All Employees By Department?",
     new inquirer.Separator(), 
     "View All Employees By Role?", 
     new inquirer.Separator(), 
@@ -279,7 +279,7 @@ function removeEmployees () {
             message: "What is the Employee's last name? ",
         },
       ]).then((answers) => {
-        console.log('Deleted selected employee\n');
+        console.log('Delete selected employee\n');
         connection.query('DELETE FROM employee WHERE ?',
     {
       last_name: answers.employee,

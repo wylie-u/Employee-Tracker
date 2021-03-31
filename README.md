@@ -2,15 +2,14 @@
 
 # Description
 
-This project creates an application used to write and save notes using express.js on the back end to save and retrieve data. HTTP request methods get, post are utilized to retrieve notes and post new notes. 
+This project creates a Node application for a business owner to be able to view and manage departments, roles, and employees in their company in order to organize and plan their business. 
 
-The app is deployed through Heroku. **[Check out the site here!](https://note-taker-du-21.herokuapp.com/)**
-
+This project uses the MYSQL NPM package to connect to your MySQL database and perform queries, and InquirerJs NPM package to interact with the user via the command-line. 
 
 
 ## Table of Contents
 
- * [User Story](#User-Story)
+ * [Video-Walk-Through](#Walk-Through)
  * [Building Tools](#Building-Tools) 
  * [Installation](#Installation) 
  * [Credits](#Credits)
@@ -18,22 +17,15 @@ The app is deployed through Heroku. **[Check out the site here!](https://note-ta
 
 
 
-
-![Site Photo](/public/assets/Note-Taker.png)
-
 ## User Story
-<pre><code>AS A small business owner
-I WANT to be able to write and save notes
-SO THAT I can organize my thoughts and keep track of tasks I need to complete
+<pre><code>AS A business owner
+I WANT to be able to view and manage departments, roles, and employees
+SO THAT I can organize and make updates to my business at any time
 </code></pre>
 
 ## Building Tools 
 
- * HTML, CSS
- * Javascript 
- * Bootstrap
  * Node.js
- * Express - Web server
  * MYSQL - NPM package to connect to your MySQL database and perform queries.
  * Inquirer  - NPM package to interact with the user via the command-line.
 
@@ -46,6 +38,6 @@ SO THAT I can organize my thoughts and keep track of tasks I need to complete
 ## Credits
 1. https://expressjs.com/
 2. https://www.mysql.com/
-3. 
+3. https://www.npmjs.com/
 
 
