@@ -128,12 +128,13 @@ const employeesByRole = () => {
   });
 };
 
+// employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id;
 // view all roles 
 function viewAllRoles() {
   connection.query(
     // grouping together employee's first + last name and role title as just title
     // joining role table on employee.role id to sync with role.id so that id's match 
-    "SELECT employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id;", 
+    "SELECT * FROM role", 
   function(err, res) {
   if (err) throw err
   console.table(res)
